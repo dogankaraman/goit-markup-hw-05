@@ -14,6 +14,9 @@
   --navyBlue-color: #2e2f42;
   --grey-color: #2e2f42;
   --dairy-color: #fcfcfc;
+
+  --transition-duration: 250ms;
+  --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 h1,
@@ -254,11 +257,10 @@ header address ul li a {
   bottom: 0;
   height: 100%;
   padding: 40px 32px;
-  background-color: #4d5ae5;
+  background-color: var(--iris-color);
   color: #f4f4fd;
-
   transform: translateY(100%);
-  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--transition-duration) var(--transition-timing);
 }
 
 .portfolio ul li:hover .portfolio-overlay {
@@ -286,6 +288,11 @@ footer {
   color: var(--white-color);
   margin-bottom: 16px;
 }
+
+.footer-social-icon {
+  margin-right: 80px;
+}
+
 footer p {
   color: #fff;
   max-width: 264px;
@@ -369,9 +376,274 @@ nav {
 }
 
 .social-link-icon {
-  fill: var(--lightSlate-color);
+  fill: var(--cloud-color);
 }
 
 footer .social-icon {
   padding: 0;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(46, 47, 66, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition: opacity var(--transition-duration) var(--transition-timing),
+    visibility var(--transition-duration) var(--transition-timing);
+}
+
+.backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal {
+  position: relative;
+  width: 408px;
+  min-height: 584px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 24px;
+  transform: scale(0.9);
+  transition: transform var(--transition-duration) var(--transition-timing);
+}
+
+.backdrop.is-open .modal {
+  transform: scale(1);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+
+  width: 24px;
+  height: 24px;
+
+  border-radius: 50%;
+  border: none;
+
+  background-color: #e7e9fc;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background-color var(--transition-duration)
+    var(--transition-timing);
+}
+
+.modal-close-btn:hover,
+.modal-close-btn:focus {
+  background-color: var(--ocean-color);
+}
+
+.modal-close-icon {
+  fill: #2e2f42;
+  transition: fill var(--transition-duration) var(--transition-timing);
+}
+
+.modal-close-btn:hover .modal-close-icon,
+.modal-close-btn:focus .modal-close-icon {
+  fill: #ffffff;
+}
+
+.modal-title {
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 16px;
+  margin-top: 42px;
+}
+
+.form-field {
+  margin-bottom: 8px;
+}
+
+.form-label {
+  display: block;
+  font-size: 12px;
+  line-height: 1.17;
+  letter-spacing: 0.04em;
+  color: var(--lightSlate-color);
+  margin-bottom: 4px;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.form-input {
+  width: 100%;
+  height: 40px;
+  padding-left: 38px;
+  border-radius: 4px;
+  border: 1px solid rgba(46, 47, 66, 0.4);
+  transition: border-color var(--transition-duration) var(--transition-timing);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--iris-color);
+}
+
+.form-icon {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  fill: #2e2f42;
+  transition: fill var(--transition-duration) var(--transition-timing);
+}
+
+.form-input:focus + .form-icon {
+  fill: var(--iris-color);
+}
+
+.form-textarea {
+  width: 100%;
+  height: 120px;
+  border: 1px solid rgba(46, 47, 66, 0.4);
+  border-radius: 4px;
+  padding: 8px 16px;
+  background-color: transparent;
+  resize: none;
+  outline: transparent;
+  font-size: 12px;
+  line-height: 1.17;
+  letter-spacing: 0.04em;
+  color: var(--title-text-color);
+  transition: border-color var(--transition-duration)
+    var(--transition-timing-function);
+}
+.form-textarea:focus {
+  border-color: var(--iris-color);
+}
+
+.custom-checkbox {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border: 1px solid rgba(46, 47, 66, 0.4);
+  border-radius: 2px;
+  margin-right: 8px;
+  background-color: #fff;
+  fill: transparent;
+  transition: background-color var(--transition-duration)
+      var(--transition-timing),
+    border-color var(--transition-duration) var(--transition-timing),
+    fill var(--transition-duration) var(--transition-timing);
+}
+
+.checkbox-text {
+  font-size: 12px;
+  line-height: 1.17;
+  letter-spacing: 0.04em;
+  color: var(--slate-color);
+}
+
+.primary-hidden-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.primary-hidden-checkbox:checked + .checkbox-label .custom-checkbox {
+  background-color: var(--ocean-color);
+  border-color: var(--ocean-color);
+  fill: var(--cloud-color);
+}
+
+.form-subscribe {
+  display: flex;
+  gap: 24px;
+  width: 100%;
+}
+
+.form-subscribe-input {
+  width: 264px;
+  height: 40px;
+  border: 1px solid #fff;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.15));
+  border-radius: 4px;
+  background-color: transparent;
+  padding: 8px 16px;
+  font-size: 12px;
+  line-height: 2;
+  letter-spacing: 0.04em;
+  color: #fff;
+  outline: none;
+  transition: border-color var(--transition-duration) var(--transition-timing);
+}
+
+.form-subscribe-input::placeholder {
+  color: #fff;
+}
+
+.form-subscribe-input:focus {
+  border-color: var(--iris-color);
+}
+
+.subscribe-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 165px;
+  height: 40px;
+  padding: 8px 24px;
+  background-color: var(--iris-color);
+  color: var(--white-color);
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  gap: 12px;
+  transition: background-color var(--transition-duration)
+    var(--transition-timing);
+}
+
+.subscribe-submit:hover,
+.subscribe-submit:focus {
+  background-color: var(--ocean-color);
+}
+
+.modal-submit-btn {
+  display: block;
+  margin: 16px auto 0;
+  padding: 16px 32px;
+  background-color: var(--iris-color);
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  min-width: 165px;
+  height: 56px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  transition: background-color var(--transition-duration)
+    var(--transition-timing);
+}
+
+.modal-submit-btn:hover,
+.modal-submit-btn:focus {
+  background-color: var(--ocean-color);
 }
